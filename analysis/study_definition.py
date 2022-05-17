@@ -2,6 +2,7 @@ from cohortextractor import StudyDefinition, patients, codelist, codelist_from_c
 from codelists import *
 
 study = StudyDefinition(
+    index_date="2020-04-01",
     default_expectations={
         "date": {"earliest": "1900-01-01", "latest": "today"},
         "rate": "uniform",
@@ -9,8 +10,10 @@ study = StudyDefinition(
     },
     population=patients.satisfying(
         """
-        (sex = "M" OR sex = "F")
+        (sex = "M" OR sex = "F") AND
+        registered
         """,
+        registered=patients.registered_as_of("index_date"),
     ),
 
     sex=patients.sex(
@@ -79,7 +82,7 @@ study = StudyDefinition(
     ),
 
     rural_urban=patients.address_as_of(
-        "2020-02-01",
+        "index_date",
         returning="rural_urban_classification",
         return_expectations={
             "rate": "universal",
@@ -97,7 +100,7 @@ study = StudyDefinition(
             "5": """index_of_multiple_deprivation >= 32844*4/5 AND index_of_multiple_deprivation < 32844""",
         },
         index_of_multiple_deprivation=patients.address_as_of(
-            "2020-02-01",
+            "index_date",
             returning="index_of_multiple_deprivation",
             round_to_nearest=100,
         ),
@@ -117,7 +120,7 @@ study = StudyDefinition(
     ),   
 
     age=patients.age_as_of(
-        "2020-02-01",
+        "index_date",
         return_expectations={
             "rate": "universal",
             "int": {"distribution": "population_ages"},
