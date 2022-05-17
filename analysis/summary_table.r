@@ -27,7 +27,7 @@ redactor <- function(n, threshold=6,e_overwrite=NA_integer_){
 df_input<- read_feather(here::here ("output", "input.feather"))
 
 sex_ethn_binary <- df_input %>%
-  mutate(white_non=(case_when(is.na(as.numeric(ethnicity_5))~"NA", as.numeric(ethnicity_5)==1~"non-white",TRUE~"white"))) %>%
+  mutate(white_non=(case_when(is.na(as.numeric(ethnicity_5))~"NA", as.numeric(ethnicity_5)==1~"white",TRUE~"non-white"))) %>%
   select(sex,white_non) %>%
   drop_na() %>%
   filter(white_non!="NA")%>%
@@ -70,7 +70,7 @@ write_csv(sex_ethn_16,here::here("output", "tables","sex_ethn_16.csv"))
 
 sex_ethn_binary_imd <- df_input %>%
   mutate(imd=as.numeric(imd),
-    white_non=(case_when(is.na(as.numeric(ethnicity_5))~"NA", as.numeric(ethnicity_5)==1~"non-white",TRUE~"white"))) %>%
+    white_non=(case_when(is.na(as.numeric(ethnicity_5))~"NA", as.numeric(ethnicity_5)==1~"white",TRUE~"non-white"))) %>%
   filter(imd>0,white_non!="NA") %>%
   select(sex,white_non,imd) %>%
   drop_na() %>%
