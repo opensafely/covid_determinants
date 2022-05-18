@@ -30,7 +30,7 @@ study = StudyDefinition(
                 include_date_of_match=False,
                 return_expectations={
                     "category": {
-                        "ratios": {"1": 0.2, "2": 0.2, "3": 0.2, "4": 0.2, "5": 0.2}
+                        "ratios": {"0":0.04,"1": 0.8, "2": 0.04, "3": 0.04, "4": 0.04, "5": 0.04}
                     },
                     "incidence": 0.75,
                 },
